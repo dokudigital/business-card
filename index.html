@@ -21,59 +21,59 @@
 
 <body class="p-4">
 <div class="container">
-    <h2 class="fw-bold mb-4">Digital Business Card Generator</h2>
+    <h2 class="mb-3 border-bottom pb-3"><img class="me-3" src="https://cdn.prod.website-files.com/674ab654de930b217c6389c1/6756a9f7ba44cad5543f87e2_doku-logo-red.svg" width="60"><span class="pt-2">Digital Business Card Generator</span></h2>
 
     <div class="row">
         <!-- LEFT FORM -->
         <div class="col-md-5">
-            <h5>📝 Input Data</h5>
+            <h5 class="fw-bold">Input Data</h5>
             <div class="card p-3 mb-4">
 
-                <label class="form-label">Name</label>
-                <input id="name" class="form-control mb-2">
+                <label class="form-label fw-bold">Name</label>
+                <input id="name" class="form-control mb-2 form-control-lg">
 
-                <label class="form-label">Title / Position</label>
-                <input id="title" class="form-control mb-2">
+                <label class="form-label fw-bold">Title / Position</label>
+                <input id="title" class="form-control mb-2 form-control-lg">
 
-                <label class="form-label">Description</label>
+                <!--<label class="form-label">Description</label>
                 <textarea id="description" class="form-control" rows="2"></textarea>
 
                 <label class="form-label">Photo URL</label>
-                <input id="photo" class="form-control mb-2" placeholder="https://...">
+                <input id="photo" class="form-control mb-2" placeholder="https://...">-->
 
-                <label class="form-label">Email</label>
-                <input id="email" class="form-control mb-2">
+                <label class="form-label fw-bold">Email</label>
+                <input id="email" class="form-control mb-2 form-control-lg">
 
-                <label class="form-label">Phone</label>
-                <input id="phone" class="form-control mb-2">
+                <label class="form-label fw-bold">Phone</label>
+                <input id="phone" class="form-control mb-2 form-control-lg" placeholder="628xxxx">
 
-                <label class="form-label">WhatsApp Number</label>
-                <input id="whatsapp" class="form-control mb-2" placeholder="628xxxx">
+                <label class="form-label fw-bold">WhatsApp Number</label>
+                <input id="whatsapp" class="form-control mb-2 form-control-lg" placeholder="628xxxx">
 
-                <label class="form-label">Website URL</label>
-                <input id="website" class="form-control mb-3">
+                <!--<label class="form-label">Website URL</label>
+                <input id="website" class="form-control mb-3">-->
 
-                <label class="form-label">Social Media</label>
-                <input id="facebook" class="form-control mb-2" placeholder="Facebook URL">
-                <input id="instagram" class="form-control mb-2" placeholder="Instagram URL">
-                <input id="linkedin" class="form-control mb-3" placeholder="LinkedIn URL">
+                <label class="form-label fw-bold">Social Media</label>
+                <!--<input id="facebook" class="form-control mb-2" placeholder="Facebook URL">
+                <input id="instagram" class="form-control mb-2" placeholder="Instagram URL">-->
+                <input id="linkedin" class="form-control mb-3 form-control-lg" placeholder="LinkedIn URL">
 
-                <label class="form-label">Choose Layout</label>
-                <select id="layout" class="form-select mb-3">
+                <label class="form-label fw-bold">Choose Layout</label>
+                <select id="layout" class="form-select mb-3 form-select-lg">
                     <option value="A">Layout A (Clean White)</option>
-                    <option value="B">Layout B (Card Centered)</option>
-                    <option value="C">Layout C (Dark Modern)</option>
+                    <!--<option value="B">Layout B (Card Centered)</option>
+                    <option value="C">Layout C (Dark Modern)</option>-->
                 </select>
 
-                <button class="btn btn-primary w-100 mb-2" onclick="generatePreview()">Generate Preview</button>
-                <button class="btn btn-dark w-100 mb-2" onclick="copyHTML()">Copy HTML</button>
-                <button class="btn btn-success w-100" onclick="downloadHTML()">Download HTML</button>
+                <button class="btn btn-danger btn-lg w-100 mb-2" onclick="generatePreview()">Generate Template</button>
+                <button class="btn btn-dark btn-lg w-100 mb-2" onclick="copyHTML()">Copy HTML</button>
+                <button class="btn btn-dark btn-lg w-100" onclick="downloadHTML()">Download HTML</button>
             </div>
         </div>
 
         <!-- RIGHT PREVIEW -->
         <div class="col-md-7">
-            <h5>Preview</h5>
+            <h5 class="fw-bold">Preview</h5>
             <iframe id="previewFrame" class="pt-5"></iframe>
         </div>
     </div>
@@ -93,39 +93,193 @@ const logoHTML = `
 // TEMPLATES
 // ===============================================================
 const layoutA = `
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-</head>
-<body>
-<div class="container p-3">
-    ${logoHTML}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Business Card - {{name}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+.doku-bg {
+  background-image: url('https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/set-01.png'); /* Ganti dengan path gambar */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+.bg-name {
+  background: #DA0000;
+background: linear-gradient(55deg,rgba(218, 0, 0, 1) 0%, rgba(248, 79, 0, 1) 100%);
+}
+.bg-lights {background-color: #dbdbdb;}
+.ticker-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  padding-left: 50px;
+}
 
-    <div class="text-center">
-        {{if_photo}}<img src="{{photo}}" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;">{{end_photo}}
-        <h3 class="fw-bold">{{name}}</h3>
-        {{if_title}}<p class="text-muted">{{title}} &nbsp;&nbsp;|&nbsp;&nbsp; DOKU</p>{{end_title}}
-        <p class="mt-2">{{description}}</p>
-    </div>
+.ticker-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: ticker-loop 10s linear infinite;
+}
 
-    <div class="mt-3">
-        {{if_email}}<a href="mailto:{{email}}" class="btn btn-danger w-100 mb-2"><i class="bi bi-envelope"></i> &nbsp;Email</a>{{end_email}}
-        {{if_phone}}<a href="tel:{{phone}}" class="btn btn-primary w-100 mb-2"><i class="bi bi-telephone"></i> &nbsp;Call</a>{{end_phone}}
-        {{if_whatsapp}}<a href="https://wa.me/{{whatsapp}}" class="btn btn-success w-100 mb-2"><i class="bi bi-whatsapp"></i> &nbsp;WhatsApp</a>{{end_whatsapp}}
-        {{if_website}}<a href="{{website}}" target="_blank" class="btn btn-secondary w-100"><i class="bi bi-globe"></i> &nbsp;Website</a>{{end_website}}
+@keyframes ticker-loop {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+</style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="container doku-bg text-white pt-2 pb-4">
+      <div class="row p-3">
+        <div class="col">
+          <img src="https://cdn.prod.website-files.com/674ab654de930b217c6389c1/6756a9f7ba44cad5543f87e2_doku-logo-red.svg" width="60">
+          <h1 class="fw-bold pt-3" style="font-size: 40px;">Think Beyond Payment</h1> 
+          <p> Partnering in Your Growth for garage to high-rise. We help you scale with confidence.</p>
+        </div>
+      </div>
     </div>
+    <!-- Header -->
+    <!-- Content Name-->
+    <div class="container ps-4 pe-4" style="margin-top: -40px; position: relative; z-index: 10;">
+      <div class="row bg-name p-3 rounded-5 text-light pt-5">
+        <h2 class="fw-bold" style="font-size: 35px;"">{{name}}
+<span class="icon-box" style="position: absolute; top: 14px; right: 35px;">
+            <img src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/akses.png" width="40">
+          </span>
+        </h2>
+        {{if_title}}<p class="lh-1">{{title}}</p>{{end_title}}
+      </div>
+    </div>
+    <!--/ Content Name -->
+    <!-- Content Body -->
+    <div class="container mt-4 ps-4 pe-4">
+      <div class="row">
+        <a href="tel:{{phone}}" target="_blank" class="text-decoration-none text-secondary">
+        <div class="col bg-lights rounded-4 p-2 mb-3">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-auto float-start ps-1">
+                <img src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/ph.png">
+              </div>
+              <div class="col">
+                <span class="text-secondary fs-5 fw-light">{{phone}}</span>
+              </div>
+              <div class="col-auto">
+                <img class="opacity-25" src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/arw.png" width="18">
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
 
-    <div class="text-center mt-4">
-        {{if_facebook}}<a href="{{facebook}}" target="_blank" class="me-2 text-secondary text-decoration-none">Facebook</a>{{end_facebook}}
-        {{if_instagram}}<a href="{{instagram}}" target="_blank" class="me-2 text-secondary text-decoration-none">Instagram</a>{{end_instagram}}
-        {{if_linkedin}}<a href="{{linkedin}}" target="_blank" class="me-2 text-secondary text-decoration-none">LinkedIn</a>{{end_linkedin}}
+      <div class="row">
+        <a href="mailto:{{email}}" target="_blank" class="text-decoration-none text-secondary">
+        <div class="col bg-lights rounded-4 p-2 mb-3">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-auto float-start ps-1">
+                <img src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/eml.png">
+              </div>
+              <div class="col">
+                <span class="text-secondary fs-5 fw-light">{{email}}</span>
+              </div>
+              <div class="col-auto">
+                <img class="opacity-25" src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/arw.png" width="18">
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <div class="row">
+        <a href="{{linkedin}}" target="_blank" class="text-decoration-none text-secondary">
+        <div class="col bg-lights rounded-4 p-2 mb-3">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-auto float-start ps-1">
+                <img src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/li.png">
+              </div>
+              <div class="col">
+                <span class="text-secondary fs-5 fw-light">{{linkedin}}</span>
+              </div>
+              <div class="col-auto">
+                <img class="opacity-25" src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/arw.png" width="18">
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <div class="row">
+        <a href="https://wa.me/{{whatsapp}}" class="text-decoration-none text-secondary">
+        <div class="col bg-lights rounded-4 p-2 mb-3">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-auto float-start ps-1">
+                <img src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/wa.png">
+              </div>
+              <div class="col">
+                <span class="text-secondary fs-5 fw-light">{{whatsapp}}</span>
+              </div>
+              <div class="col-auto">
+                <img class="opacity-25" src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/arw.png" width="18">
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <div class="row">
+        <a href="https://www.google.com/maps/place/DOKU+-+PT+Nusa+Satu+Inti+Artha/@-6.2245043,106.8085344,17z/data=!3m1!4b1!4m6!3m5!1s0x2e69f1450a4c7051:0xef7901b5b7ede972!8m2!3d-6.2245096!4d106.8111093!16s%2Fg%2F11h52qqwmt?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D" class="text-decoration-none text-secondary" target="_blank">
+        <div class="col bg-lights rounded-4 p-2 mb-3">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-auto float-start ps-1">
+                <img src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/map.png">
+              </div>
+              <div class="col ticker-wrapper ms-3 me-1">
+                <span class="text-secondary ticker-text fs-5 fw-light">DOKU Headquarter (PT Nusa Satu Inti Artha)</span>
+              </div>
+              <div class="col-auto">
+                <img class="opacity-25" src="https://raw.githubusercontent.com/dokudigital/business-card/refs/heads/main/arw.png" width="18">
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <div class="row mb-3 mt-2">
+        <div class="col">
+          <span class="small text-secondary fw-light ms-5 ps-3">Visit our website</span> <span class="badge text-secondary bg-lights mt-1 float-end">doku.promo</span> <span class="badge text-secondary bg-lights float-end mt-1 me-2">doku.com</span>
+        </div>
+      </div>
+
+      </div>
     </div>
-</div>
-</body>
+    <!--/ Content Body -->
+    <!-- Footer -->
+    <div class="container py-2">
+      <div class="row">
+        <div class="col text-center">
+          <p><span class="fw-bold small">DOKU - Payment Fintech Company<span><br>
+<span class="fw-light small text-secondary" style="font-size: 13px;">The First Electronic Payment Provider and Risk Management company in Indonesia</span></p>
+        </div>
+      </div>
+    </div>
+    <!--/ Footer -->
+  </body>
 </html>`;
 
 
@@ -206,14 +360,9 @@ function generatePreview() {
     let data = {
         name: document.getElementById("name").value.trim(),
         title: document.getElementById("title").value.trim(),
-        photo: document.getElementById("photo").value.trim(),
-        description: document.getElementById("description").value,
         email: document.getElementById("email").value.trim(),
         phone: document.getElementById("phone").value.trim(),
         whatsapp: document.getElementById("whatsapp").value.trim(),
-        website: document.getElementById("website").value.trim(),
-        facebook: document.getElementById("facebook").value.trim(),
-        instagram: document.getElementById("instagram").value.trim(),
         linkedin: document.getElementById("linkedin").value.trim()
     };
 
@@ -226,7 +375,7 @@ function generatePreview() {
         layoutC;
 
     // FIRST remove conditional blocks
-    const fields = ["title","photo","email","phone","whatsapp","website","facebook","instagram","linkedin"];
+    const fields = ["title","email","phone","whatsapp","linkedin"];
     fields.forEach(f => {
         const regex = new RegExp(`{{if_${f}}}([\\s\\S]*?){{end_${f}}}`, "g");
         template = template.replace(regex, data[f] ? "$1" : "");
