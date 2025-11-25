@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Business Card Generator</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body { background:#f8f9fa; }
+    #previewFrame { 
+        width:100%; 
+        height:750px; 
+        border:1px solid #ddd; 
+        border-radius:8px;
+        background:white;
+        padding-top:15px;
+        padding-bottom: 10px;
+    }
+</style>
+</head>
+
+<body class="p-4">
+<div class="container">
+    <h2 class="fw-bold mb-4">Digital Business Card Generator</h2>
+
+    <div class="row">
+        <!-- LEFT FORM -->
+        <div class="col-md-5">
+            <h5>📝 Input Data</h5>
+            <div class="card p-3 mb-4">
+
+                <label class="form-label">Name</label>
+                <input id="name" class="form-control mb-2">
+
+                <label class="form-label">Title / Position</label>
+                <input id="title" class="form-control mb-2">
+
+                <label class="form-label">Description</label>
+                <textarea id="description" class="form-control" rows="2"></textarea>
+
+                <label class="form-label">Photo URL</label>
+                <input id="photo" class="form-control mb-2" placeholder="https://...">
+
+                <label class="form-label">Email</label>
+                <input id="email" class="form-control mb-2">
+
+                <label class="form-label">Phone</label>
+                <input id="phone" class="form-control mb-2">
+
+                <label class="form-label">WhatsApp Number</label>
+                <input id="whatsapp" class="form-control mb-2" placeholder="628xxxx">
+
+                <label class="form-label">Website URL</label>
+                <input id="website" class="form-control mb-3">
+
+                <label class="form-label">Social Media</label>
+                <input id="facebook" class="form-control mb-2" placeholder="Facebook URL">
+                <input id="instagram" class="form-control mb-2" placeholder="Instagram URL">
+                <input id="linkedin" class="form-control mb-3" placeholder="LinkedIn URL">
+
+                <label class="form-label">Choose Layout</label>
+                <select id="layout" class="form-select mb-3">
+                    <option value="A">Layout A (Clean White)</option>
+                    <option value="B">Layout B (Card Centered)</option>
+                    <option value="C">Layout C (Dark Modern)</option>
+                </select>
+
+                <button class="btn btn-primary w-100 mb-2" onclick="generatePreview()">Generate Preview</button>
+                <button class="btn btn-dark w-100 mb-2" onclick="copyHTML()">Copy HTML</button>
+                <button class="btn btn-success w-100" onclick="downloadHTML()">Download HTML</button>
+            </div>
+        </div>
+
+        <!-- RIGHT PREVIEW -->
+        <div class="col-md-7">
+            <h5>Preview</h5>
+            <iframe id="previewFrame" class="pt-5"></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===============================================================
+// STATIC LOGO
+// ===============================================================
+const logoHTML = `
+<div class="text-center mb-3">
+    <img src="https://cdn.prod.website-files.com/674ab654de930b217c6389c1/6756a9f7ba44cad5543f87e2_doku-logo-red.svg"
+         style="height:70px;width:auto;" alt="Logo">
+</div>`;
+
+// ===============================================================
+// TEMPLATES
+// ===============================================================
+const layoutA = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="container p-3">
+    ${logoHTML}
+
+    <div class="text-center">
+        {{if_photo}}<img src="{{photo}}" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;">{{end_photo}}
+        <h3 class="fw-bold">{{name}}</h3>
+        {{if_title}}<p class="text-muted">{{title}} &nbsp;&nbsp;|&nbsp;&nbsp; DOKU</p>{{end_title}}
+        <p class="mt-2">{{description}}</p>
+    </div>
+
+    <div class="mt-3">
+        {{if_email}}<a href="mailto:{{email}}" class="btn btn-danger w-100 mb-2"><i class="bi bi-envelope"></i> &nbsp;Email</a>{{end_email}}
+        {{if_phone}}<a href="tel:{{phone}}" class="btn btn-primary w-100 mb-2"><i class="bi bi-telephone"></i> &nbsp;Call</a>{{end_phone}}
+        {{if_whatsapp}}<a href="https://wa.me/{{whatsapp}}" class="btn btn-success w-100 mb-2"><i class="bi bi-whatsapp"></i> &nbsp;WhatsApp</a>{{end_whatsapp}}
+        {{if_website}}<a href="{{website}}" target="_blank" class="btn btn-secondary w-100"><i class="bi bi-globe"></i> &nbsp;Website</a>{{end_website}}
+    </div>
+
+    <div class="text-center mt-4">
+        {{if_facebook}}<a href="{{facebook}}" target="_blank" class="me-2 text-secondary text-decoration-none">Facebook</a>{{end_facebook}}
+        {{if_instagram}}<a href="{{instagram}}" target="_blank" class="me-2 text-secondary text-decoration-none">Instagram</a>{{end_instagram}}
+        {{if_linkedin}}<a href="{{linkedin}}" target="_blank" class="me-2 text-secondary text-decoration-none">LinkedIn</a>{{end_linkedin}}
+    </div>
+</div>
+</body>
+</html>`;
+
+
+const layoutB = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="container p-4 text-center">
+    ${logoHTML}
+
+    {{if_photo}}<img src="{{photo}}" class="rounded-circle mb-3" style="width:130px;height:130px;object-fit:cover;">{{end_photo}}
+    <h3 class="fw-bold">{{name}}</h3>
+    {{if_title}}<p class="text-muted">{{title}} &nbsp;&nbsp;|&nbsp;&nbsp; DOKU</p>{{end_title}}
+    <p class="mt-2">{{description}}</p>
+
+    <div class="mt-3">
+        {{if_email}}<a href="mailto:{{email}}" class="btn btn-danger w-100 mb-2"><i class="bi bi-envelope"></i> &nbsp;Email</a>{{end_email}}
+        {{if_phone}}<a href="tel:{{phone}}" class="btn btn-primary w-100 mb-2"><i class="bi bi-telephone"></i> &nbsp;Call</a>{{end_phone}}
+        {{if_whatsapp}}<a href="https://wa.me/{{whatsapp}}" class="btn btn-success w-100 mb-2"><i class="bi bi-whatsapp"></i> &nbsp;WhatsApp</a>{{end_whatsapp}}
+        {{if_website}}<a href="{{website}}" class="btn btn-secondary w-100 mb-2" target="_blank"><i class="bi bi-globe"></i> &nbsp;Website</a>{{end_website}}
+    </div>
+
+    <div class="mt-3">
+        {{if_facebook}}<a href="{{facebook}}" target="_blank" class="me-2 text-secondary text-decoration-none">Facebook</a>{{end_facebook}}
+        {{if_instagram}}<a href="{{instagram}}" target="_blank" class="me-2 text-secondary text-decoration-none">Instagram</a>{{end_instagram}}
+        {{if_linkedin}}<a href="{{linkedin}}" target="_blank" class="me-2 text-secondary text-decoration-none">LinkedIn</a>{{end_linkedin}}
+    </div>
+</div>
+</body>
+</html>`;
+
+
+const layoutC = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div class="container text-center p-4" style="background:#222;color:white;border-radius:12px;">
+    ${logoHTML}
+
+    {{if_photo}}<img src="{{photo}}" class="rounded-circle mb-3" style="width:130px;height:130px;object-fit:cover;">{{end_photo}}
+    <h3 class="fw-bold">{{name}}</h3>
+    {{if_title}}<p class="text-light">{{title}} &nbsp;&nbsp;|&nbsp;&nbsp; DOKU</p>{{end_title}}
+    <p class="mt-2">{{description}}</p>
+
+    <div class="mt-3">
+        {{if_email}}<a href="mailto:{{email}}" class="btn btn-light w-100 mb-2"><i class="bi bi-envelope"></i> &nbsp;Email</a>{{end_email}}
+        {{if_whatsapp}}<a href="https://wa.me/{{whatsapp}}" class="btn btn-success w-100 mb-2"><i class="bi bi-whatsapp"></i> &nbsp;WhatsApp</a>{{end_whatsapp}}
+        {{if_website}}<a href="{{website}}" class="btn btn-secondary w-100 mb-2"><i class="bi bi-globe"></i> &nbsp;Website</a>{{end_website}}
+        {{if_phone}}<a href="tel:{{phone}}" class="btn btn-warning w-100 mb-2"><i class="bi bi-telephone"></i> &nbsp;Call</a>{{end_phone}}
+    </div>
+
+    <div class="mt-3">
+        {{if_facebook}}<a href="{{facebook}}" style="color:white" class="me-2 text-decoration-none">Facebook</a>{{end_facebook}}
+        {{if_instagram}}<a href="{{instagram}}" style="color:white" class="me-2 text-decoration-none">Instagram</a>{{end_instagram}}
+        {{if_linkedin}}<a href="{{linkedin}}" style="color:white" class="me-2 text-decoration-none">LinkedIn</a>{{end_linkedin}}
+    </div>
+</div>
+</body>
+</html>`;
+
+
+// ===============================================================
+// PREVIEW GENERATOR
+// ===============================================================
+function generatePreview() {
+    let data = {
+        name: document.getElementById("name").value.trim(),
+        title: document.getElementById("title").value.trim(),
+        photo: document.getElementById("photo").value.trim(),
+        description: document.getElementById("description").value,
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        whatsapp: document.getElementById("whatsapp").value.trim(),
+        website: document.getElementById("website").value.trim(),
+        facebook: document.getElementById("facebook").value.trim(),
+        instagram: document.getElementById("instagram").value.trim(),
+        linkedin: document.getElementById("linkedin").value.trim()
+    };
+
+    // No placeholder → allow hide empty block
+    if (!data.photo) data.photo = "";
+
+    let template = 
+        (document.getElementById("layout").value === "A") ? layoutA :
+        (document.getElementById("layout").value === "B") ? layoutB :
+        layoutC;
+
+    // FIRST remove conditional blocks
+    const fields = ["title","photo","email","phone","whatsapp","website","facebook","instagram","linkedin"];
+    fields.forEach(f => {
+        const regex = new RegExp(`{{if_${f}}}([\\s\\S]*?){{end_${f}}}`, "g");
+        template = template.replace(regex, data[f] ? "$1" : "");
+    });
+
+    // THEN replace variables
+    for (const key in data) {
+        template = template.replaceAll(`{{${key}}}`, data[key]);
+    }
+
+    document.getElementById("previewFrame").srcdoc = template;
+}
+
+// ===============================================================
+// COPY HTML
+// ===============================================================
+function copyHTML() {
+    const html = document.getElementById("previewFrame").srcdoc;
+    navigator.clipboard.writeText(html);
+    alert("HTML copied!");
+}
+
+// ===============================================================
+// DOWNLOAD HTML
+// ===============================================================
+function downloadHTML() {
+    const html = document.getElementById("previewFrame").srcdoc;
+    const blob = new Blob([html], { type:"text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "digital-card.html";
+    a.click();
+}
+</script>
+
+</body>
+</html>
